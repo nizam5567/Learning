@@ -10,7 +10,7 @@ const Result = () => {
                     <MDBCardBody>
                         {/* <MDBCardTitle>Special title treatment</MDBCardTitle> */}
                         <MDBCardText>
-
+Result
                         </MDBCardText>
                     </MDBCardBody>
                 </MDBCard>
