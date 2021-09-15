@@ -1,4 +1,4 @@
-import { MDBContainer, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText, MDBListGroup, MDBListGroupItem } from "mdbreact";
+import { MDBContainer, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText } from "mdbreact";
 import { Link } from "react-router-dom";
 
 const StoryDetails = (props: any) => {

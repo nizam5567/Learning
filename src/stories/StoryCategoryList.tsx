@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef } from "react";
+import React, { useState } from "react";
 import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBCard, MDBCardBody, MDBCardHeader, MDBCardText } from "mdbreact";
 import { Link } from "react-router-dom";
 
@@ -40,7 +40,6 @@ export default function StoryCategoryList(props: any) {
                     </MDBCardBody>
                 </MDBCard>
             </MDBContainer>
-
         </div>
     );
 }

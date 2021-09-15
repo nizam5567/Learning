@@ -1,5 +1,4 @@
-import { MDBContainer, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText, MDBListGroup, MDBListGroupItem } from "mdbreact";
-import { Link } from "react-router-dom";
+import { MDBContainer, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText } from "mdbreact";
 
 const Result = () => {
     return (

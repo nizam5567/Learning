@@ -1,8 +1,7 @@
-import React, { useRef, useState, forwardRef } from "react";
+import React, { useState } from "react";
 // import ReactDOM from 'react-dom';
 import { AnimateSharedLayout } from "framer-motion";
 import QueAns from "./QueAns";
-import { useParams } from "react-router-dom";
 import CorrectAns from "./CorrectAns";
 
 interface Question {
