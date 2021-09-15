@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TagList from "./tags/TagList";
 import StoryCategoryList from "./stories/StoryCategoryList";
 import StoryDetails from "./stories/StoryDetails";
+import Vocabulary from "./stories/Vocabulary";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/storyCategory/:tagId" component={StoryCategoryList} />
           <Route exact path="/content/:tagId/:storyCategoryId" component={ContentList} />
           <Route path="/story/:id" component={StoryDetails} />
+          <Route path="/vocabulary/:storyId" component={Vocabulary} />          
           <Route path="/storyQuestions/:id" component={StoryQuestions} />
         </Switch>
 

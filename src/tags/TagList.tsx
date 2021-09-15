@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBContainer, MDBListGroup, MDBListGroupItem } from "mdbreact";
-import { motion } from "framer-motion";
-
 
 
 export default function TagList() {
@@ -10,10 +8,8 @@ export default function TagList() {
     { id: 1, title: "Story", },
     { id: 2, title: "Lesson", },
   ];
-  const [tags, setTags] = useState(tagData);
-  function template({ rotate, x }: any) {
-    return `rotate(${rotate}) translateX(${x})`;
-  }
+  // const [tags, setTags] = useState(tagData);
+  
   return (
     <div className="container">
       <MDBContainer>
