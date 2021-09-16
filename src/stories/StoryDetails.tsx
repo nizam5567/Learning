@@ -15,15 +15,15 @@ const StoryDetails = (props: any) => {
     ];
 
     const dialogsData = [
-        { storyId: 1, content: "dialog 1", },
-        { storyId: 1, content: "dialog 2", },
-        { storyId: 1, content: "dialog 3", },
-        { storyId: 1, content: "dialog 4", },
-        { storyId: 1, content: "dialog 5", },
-        { storyId: 1, content: "dialog 6", }
+        { id: 1, storyId: 1, content: "dialog 1", },
+        { id: 2, storyId: 1, content: "dialog 2", },
+        { id: 3, storyId: 1, content: "dialog 3 dialog 3", },
+        { id: 4, storyId: 1, content: "dialog 4 dialog 4", },
+        { id: 5, storyId: 1, content: "dialog 5", },
+        { id: 6, storyId: 1, content: "dialog 6", }
     ];
 
-    const showNoOfDialog = 3;
+    const showNoOfDialog = 2;
     let startingIdx = 0;
 
     let count = 0;
@@ -38,18 +38,25 @@ const StoryDetails = (props: any) => {
 
     const storyData = contentData.find(item => item.id === storyId);
 
-    const getDialogData = () => {
-        console.log(startingIndex);
+    const getDialogData = (evt: any, isPreviousData: boolean = false) => {
+        // console.log(startingIndex, isPreviousData);
         let count = 0;
+        let startingIdx = startingIndex;
+        if (isPreviousData) {
+            startingIdx = startingIndex - (showNoOfDialog * 2);
+            setStartingIndex(startingIdx);
+        }
+
         const visibleDialogData = dialogsData.filter((item, index) => {
-            if (index >= startingIndex) {
+            if (index >= startingIdx) {
                 count++;
             }
-            return index >= startingIndex && count <= showNoOfDialog;
+            return index >= startingIdx && count <= showNoOfDialog;
         });
+
         // console.log(visibleDialogData);
         setVisibleDialogs(visibleDialogData);
-        const newStartingIndex = startingIndex + showNoOfDialog;
+        const newStartingIndex = startingIdx + showNoOfDialog;
         setStartingIndex(newStartingIndex);
     }
 
@@ -61,13 +68,24 @@ const StoryDetails = (props: any) => {
                     <MDBCardBody>
                         <div className="container">
                             {visibleDialogs.length > 0 && visibleDialogs.map((item, index) => {
-                                return (
-                                    <div key={index} className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
+                                return (<div key={item.id}>
+                                    <div className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
                                         <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>{item.content}</div>
-                                    </div>);
+                                    </div>
+                                    <div className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
+                                        <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight" : '')}>
+                                            <img src={"/images/img" + (index % 2 !== 0 ? "1" : "2") + ".png"} alt="" height="100%" />
+                                        </div>
+                                    </div>
+                                </div>);
                             })}
                             <div className="row">
                                 <div className="col-12" style={{ textAlign: "center", marginTop: "10px" }}>
+                                    {startingIndex > showNoOfDialog &&
+                                        <button type="button" className="btn btn-primary"
+                                            onClick={(e) => getDialogData(e, true)}
+                                            style={{ paddingLeft: "30px", paddingRight: "30px", marginRight: "20px" }}>Back</button>
+                                    }
                                     {dialogsData.length >= (startingIndex + showNoOfDialog) ?
                                         <button type="button" className="btn btn-primary"
                                             onClick={getDialogData}

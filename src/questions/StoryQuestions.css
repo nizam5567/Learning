@@ -38,11 +38,22 @@
   .cell {
     background: #fff;
     border-radius: 8px;
-    height: 100px;
+    /* height: 100px; */
+    min-height: 200px;
     width: auto;
     color: #333;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     position: relative;
+
+  }
+
+  .cellQue {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    min-height: 100px !important;
   }
   
   .draggable {

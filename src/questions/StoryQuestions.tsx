@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AnimateSharedLayout } from "framer-motion";
 import QueAns from "./QueAns";
 import CorrectAns from "./CorrectAns";
+import Result from "../Result";
 
 interface Question {
   id: number,
@@ -98,7 +99,7 @@ const StoryQuestions = (props: any) => {
 
     setTimeout(() => {
       setShowCorrectAnsScreen(false);
-    }, 1500);
+    }, 2000);
 
     if (currentQue) {
       const que: Question = {
@@ -111,7 +112,7 @@ const StoryQuestions = (props: any) => {
     } else {
       setTimeout(() => {
         setIsCompleted(true);
-      }, 1500);
+      }, 2000);
     }
   }
 
@@ -121,10 +122,12 @@ const StoryQuestions = (props: any) => {
       {!isCompleted ? (!showCorrectAnsScreen && <AnimateSharedLayout>
         <QueAns queObj={activeQueData}
           setQue={handleQueChange} />
-      </AnimateSharedLayout>) : <div>
-        <h2>You have completed Part 1</h2>
-        <h1>Result : {result} out of {totalPoints} Points</h1>
-      </div>}
+      </AnimateSharedLayout>) : <Result result={result} totalPoints={totalPoints} />
+      // <div>
+      //   <h2>You have completed Part 1</h2>
+      //   <h1>Result : {result} out of {totalPoints} Points</h1>
+      // </div>
+      }
 
       {showCorrectAnsScreen && <CorrectAns givenQueAnsObj={givenQueAnsObj} />}
     </div>

@@ -2,6 +2,7 @@ import React, { useRef, useState, forwardRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./StoryQuestions.css";
+import { Button, Modal } from "react-bootstrap";
 
 export default function QueAns(props: any) {
   //console.log('props.queObj', props.queObj);
@@ -39,12 +40,24 @@ export default function QueAns(props: any) {
   const [activeIndex, setActiveIndex] = useState(queIndex);
   const [isDragging, setIsDragging] = useState(false);
 
+  const dialogsData = [
+    { storyId: 1, content: "dialog 1", },
+    { storyId: 1, content: "dialog 2", },
+    { storyId: 1, content: "dialog 3", },
+    { storyId: 1, content: "dialog 4", },
+    { storyId: 1, content: "dialog 5", },
+    { storyId: 1, content: "dialog 6", }
+  ];
+
   useEffect(() => {
     setActiveIndex(queIndex);
   }, [props.queObj]);
 
   const getActiveCellIndex = ({ point }: any) => {
     const cellIndex = cells.findIndex((cell: any) => {
+      if (cell.current === null)
+        return false;
+
       const {
         offsetLeft,
         offsetTop,
@@ -88,11 +101,16 @@ export default function QueAns(props: any) {
     // } else {
     //   alert("wrong");
     // }
-    
+
     setTimeout(() => {
       props.setQue(props.queObj, isCorrect);
     }, 500);
   };
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   let answerIndex = 0;
 
@@ -106,11 +124,12 @@ export default function QueAns(props: any) {
           {[...Array(rowsColumns[i])].map((cE, cIndex) => {
             colNumber++;
 
-            return <div key={cIndex} className={"col-4 " + (colNumber > 1 ? "offset-4" : "")}>
+            return <div key={cIndex} className={(elementIndex !== queIndex ? "col-6" : "col-4")}>
               <Cell
                 index={elementIndex}
                 key={`cell-${elementIndex}`}
                 activeIndex={activeIndex}
+                queIndex={queIndex}
                 onDragStart={dragStart}
                 onDragEnd={dragEnd}
                 isDragging={isDragging}
@@ -124,6 +143,36 @@ export default function QueAns(props: any) {
           )}
         </div>);
       })}
+
+
+      <Button variant="primary" onClick={handleShow}
+        style={{ marginTop: "20px" }}>
+        Show Story
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Story</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="container">
+            {dialogsData.length > 0 && dialogsData.map((item, index) => {
+              return (
+                <div key={index} className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
+                  <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>{item.content}</div>
+                </div>);
+            })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
 
     </div>
   );
@@ -156,21 +205,22 @@ const fromAnimatePoint = [
 ];
 
 export const Cell = forwardRef(
-  ({ index, activeIndex, onDragStart, onDragEnd, isDragging, isCorrect, text }: any, ref: any) => {
+  ({ index, activeIndex, queIndex, onDragStart, onDragEnd, isDragging, isCorrect, text }: any, ref: any) => {
     return (
       <motion.div
-        className={"cell center "}
+        className={"cell center " + (index === queIndex ? "cellQue" : "")}
         ref={ref}
         id={index}
         variants={cellVariant}
         //animate={isDragging ? "dragging" : "inactive"}
         initial={{ x: fromAnimatePoint[index].x, y: fromAnimatePoint[index].y, opacity: 0, scale: .5 }}
-        animate={{ x: '0px', y: '0px', opacity: 1, scale: 1, border: isDragging ? "2px dashed #008E95" : "2px solid #fff" }}
+        //animate={{ x: '0px', y: '0px', opacity: 1, scale: 1, border: isDragging ? "2px dashed #008E95" : "2px solid #fff" }}
+        animate={{ x: '0px', y: '0px', opacity: 1, scale: 1, border: index !== queIndex ? isDragging ? "2px dashed #008E95" : "2px solid #fff" : "" }}
         transition={{ duration: 1 }}
         data-iscorrect={isCorrect}
-        style={index === activeIndex ? { width: '100%', zIndex: 100 } : {}}
+        style={index === queIndex ? { width: '100%', zIndex: 100 } : {}}
       >
-        {text}
+        {index !== queIndex && text}
         {activeIndex === index && (
           <motion.div
             className="draggable center"

@@ -9,6 +9,7 @@ import TagList from "./tags/TagList";
 import StoryCategoryList from "./stories/StoryCategoryList";
 import StoryDetails from "./stories/StoryDetails";
 import Vocabulary from "./stories/Vocabulary";
+import Sentence from "./stories/Sentence";
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
           <Route exact path="/storyCategory/:tagId" component={StoryCategoryList} />
           <Route exact path="/content/:tagId/:storyCategoryId" component={ContentList} />
           <Route path="/story/:id" component={StoryDetails} />
-          <Route path="/vocabulary/:storyId" component={Vocabulary} />          
+          <Route path="/vocabulary/:storyId" component={Vocabulary} /> 
+          <Route path="/sentence/:storyId" component={Sentence} />                    
           <Route path="/storyQuestions/:id" component={StoryQuestions} />
         </Switch>
 
