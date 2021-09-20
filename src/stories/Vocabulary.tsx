@@ -43,7 +43,11 @@ const Vocabulary = (props: any) => {
                     <div>
                         <Link to={"/sentence/" + storyId}>
                             <button type="button" className="btn btn-primary"
-                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Learn Sentence</button>
+                                style={{ paddingLeft: "30px", paddingRight: "30px", marginRight: "20px" }}>Learn Sentence</button>
+                        </Link>
+                        <Link to={"/storyQuestions/" + storyId}>
+                            <button type="button" className="btn btn-primary"
+                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Start Exam</button>
                         </Link>
                     </div>
                 </MDBCardBody>

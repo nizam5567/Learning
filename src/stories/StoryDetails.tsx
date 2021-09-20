@@ -15,12 +15,12 @@ const StoryDetails = (props: any) => {
     ];
 
     const dialogsData = [
-        { id: 1, storyId: 1, content: "dialog 1", },
-        { id: 2, storyId: 1, content: "dialog 2", },
-        { id: 3, storyId: 1, content: "dialog 3 dialog 3", },
-        { id: 4, storyId: 1, content: "dialog 4 dialog 4", },
-        { id: 5, storyId: 1, content: "dialog 5", },
-        { id: 6, storyId: 1, content: "dialog 6", }
+        { id: 1, storyId: 1, content: "Programmer can build their career in Upwork.", contentBangla: "প্রোগ্রামার আপওয়ার্ক এ তাদের ক্যারিয়ার গড়তে পারে।" },
+        { id: 2, storyId: 1, content: "Know the application process in Upwork.", contentBangla: "আপওয়ার্ক এ আবেদন প্রক্রিয়া জানুন।" },
+        { id: 3, storyId: 1, content: "Step 1 - Create your Upwork profile.", contentBangla: "ধাপ 1 - আপনার আপওয়ার্ক প্রোফাইল তৈরি করুন।" },
+        { id: 4, storyId: 1, content: "dialog 4 dialog 4", contentBangla: "" },
+        { id: 5, storyId: 1, content: "dialog 5", contentBangla: "" },
+        { id: 6, storyId: 1, content: "dialog 6", contentBangla: "" }
     ];
 
     const showNoOfDialog = 2;
@@ -70,7 +70,11 @@ const StoryDetails = (props: any) => {
                             {visibleDialogs.length > 0 && visibleDialogs.map((item, index) => {
                                 return (<div key={item.id}>
                                     <div className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
-                                        <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>{item.content}</div>
+                                        <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>
+                                            {item.content}
+                                            <br />
+                                            {item.contentBangla}
+                                        </div>
                                     </div>
                                     <div className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
                                         <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight" : '')}>
@@ -90,11 +94,16 @@ const StoryDetails = (props: any) => {
                                         <button type="button" className="btn btn-primary"
                                             onClick={getDialogData}
                                             style={{ paddingLeft: "30px", paddingRight: "30px" }}>Next</button> :
-                                        <Link to={"/vocabulary/" + storyId}>
-                                            <button type="button" className="btn btn-primary"
-                                                onClick={getDialogData}
-                                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Learn Vocabulary</button>
-                                        </Link>
+                                        <>
+                                            <Link to={"/vocabulary/" + storyId}>
+                                                <button type="button" className="btn btn-primary"
+                                                    style={{ paddingLeft: "30px", paddingRight: "30px", marginRight: "20px" }}>Learn Vocabulary</button>
+                                            </Link>
+                                            <Link to={"/storyQuestions/" + storyId}>
+                                                <button type="button" className="btn btn-primary"
+                                                    style={{ paddingLeft: "30px", paddingRight: "30px" }}>Start Exam</button>
+                                            </Link>
+                                        </>
                                     }
                                 </div>
                             </div>
