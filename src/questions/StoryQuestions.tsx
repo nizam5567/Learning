@@ -4,6 +4,7 @@ import { AnimateSharedLayout } from "framer-motion";
 import QueAns from "./QueAns";
 import CorrectAns from "./CorrectAns";
 import Result from "../Result";
+import { Button, Modal } from "react-bootstrap";
 
 interface Question {
   id: number;
@@ -111,6 +112,10 @@ const StoryQuestions = (props: any) => {
   const [storyQuestions, setStoryQuestions] = useState(selectedStoryQuestions);
   const [showCorrectAnsScreen, setShowCorrectAnsScreen] = useState(false);
   const [givenQueAnsObj, setGivenQueAnsObj] = useState({});
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleQueChange = (queObj: any, isAnsCorrect: string) => {
     const updatedQuestions = storyQuestions.map((item) => item.id === queObj.id ? { ...item, isCompleted: true } : item)
@@ -139,11 +144,12 @@ const StoryQuestions = (props: any) => {
     });
 
     setGivenQueAnsObj({ queObj: queObj, isAnsCorrect: isAnsCorrect === "true" });
-    setShowCorrectAnsScreen(true);
+    //setShowCorrectAnsScreen(true);
+    setShow(true);
 
-    setTimeout(() => {
-      setShowCorrectAnsScreen(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setShowCorrectAnsScreen(false);
+    // }, 2000);
 
     if (currentQue) {
       const que: Question = {
@@ -167,12 +173,12 @@ const StoryQuestions = (props: any) => {
         userResultDetails.suggestion = "Read Story";
         userResultDetails.suggestionLink = "/story/" + storyId;
         userResultDetails.suggestionLinkText = "Read Story";
-      } else if (achievedPointsPercentage >= 33 && achievedVocabularyPointsPercentage < 33){
+      } else if (achievedPointsPercentage >= 33 && achievedVocabularyPointsPercentage < 33) {
         console.log("voca");
         userResultDetails.suggestion = "Read Vocabulary";
         userResultDetails.suggestionLink = "/vocabulary/" + storyId;
         userResultDetails.suggestionLinkText = "Learn Vocabulary";
-      } else if (achievedPointsPercentage >= 33 && achievedSentencePointsPercentage < 33){
+      } else if (achievedPointsPercentage >= 33 && achievedSentencePointsPercentage < 33) {
         console.log("sen");
         userResultDetails.suggestion = "Read Sentence";
         userResultDetails.suggestionLink = "/sentence/" + storyId;
@@ -188,20 +194,47 @@ const StoryQuestions = (props: any) => {
     }
   }
 
+  const showQueNumberBar = (questions: Question[]) => {
+    const count = questions.filter((item: any) => item.isCompleted === true).length;
+    const bar = questions.map((item, i) => {
+      return (<div className={"queBar " + (i < count ? "fillQueBar" : "")}></div>);
+    });
+    return <div className="queBarContainer">{bar}</div>;
+  }
+
   return (
     <div className="container" style={{ marginTop: "50px" }}>
 
-      {!isCompleted ? (!showCorrectAnsScreen && <AnimateSharedLayout>
+      {/* {!isCompleted ? (!showCorrectAnsScreen && <>{showQueNumberBar(storyQuestions)}<AnimateSharedLayout>
         <QueAns queObj={activeQueData}
           setQue={handleQueChange} />
-      </AnimateSharedLayout>) : <Result result={result} resultDetails={resultDetails} totalPoints={totalPoints} />
-        // <div>
-        //   <h2>You have completed Part 1</h2>
-        //   <h1>Result : {result} out of {totalPoints} Points</h1>
-        // </div>
+      </AnimateSharedLayout></>) : <Result result={result} resultDetails={resultDetails} totalPoints={totalPoints} />
+      } */}
+      {!isCompleted ? (!show && <>{showQueNumberBar(storyQuestions)}<AnimateSharedLayout>
+        <QueAns queObj={activeQueData}
+          setQue={handleQueChange} />
+      </AnimateSharedLayout></>) : <Result result={result} resultDetails={resultDetails} totalPoints={totalPoints} />
       }
 
-      {showCorrectAnsScreen && <CorrectAns givenQueAnsObj={givenQueAnsObj} />}
+      {/* {showCorrectAnsScreen && <CorrectAns givenQueAnsObj={givenQueAnsObj} />} */}
+     
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Result</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CorrectAns givenQueAnsObj={givenQueAnsObj} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 }

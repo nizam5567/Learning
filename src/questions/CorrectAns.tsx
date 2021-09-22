@@ -9,20 +9,21 @@ const CorrectAns = (props: any) => {
 
     return (
         <div className="container">
-            <MDBContainer>
+            {/* <MDBContainer>
                 <MDBCard style={{ width: "100%", marginTop: "1rem" }}>
                     <MDBCardHeader color="primary-color deep-orange lighten-1">Result</MDBCardHeader>
                     <MDBCardBody>
-                        {/* <MDBCardTitle>Special title treatment</MDBCardTitle> */}
-
-                        <h1 style={{color: givenQueAnsObj.isAnsCorrect?'green':'red'}}>Your answer is <strong>{givenQueAnsObj.isAnsCorrect ? 'correct' : 'wrong'}</strong></h1>
-                        {!givenQueAnsObj.isAnsCorrect && <div style={{ marginTop: "50px" }}>
-                            <h2>Correct answer is <br /><strong>{correctAns}</strong></h2>
-                        </div>}
-                        {/* <button type="button" className="btn btn-primary">Primary</button> */}
-                    </MDBCardBody>
+                        </MDBCardBody>
                 </MDBCard>
-            </MDBContainer>
+            </MDBContainer> */}
+            {/* <MDBCardTitle>Special title treatment</MDBCardTitle> */}
+
+            <h1 style={{ color: givenQueAnsObj.isAnsCorrect ? 'green' : 'red' }}>Your answer is <strong>{givenQueAnsObj.isAnsCorrect ? 'correct' : 'wrong'}</strong></h1>
+            {!givenQueAnsObj.isAnsCorrect && <div style={{ marginTop: "50px" }}>
+                <h2>Correct answer is <br /><strong>{correctAns}</strong></h2>
+            </div>}
+            {/* <button type="button" className="btn btn-primary">Primary</button> */}
+
         </div>
 
     );

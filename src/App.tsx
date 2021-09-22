@@ -10,6 +10,7 @@ import StoryCategoryList from "./stories/StoryCategoryList";
 import StoryDetails from "./stories/StoryDetails";
 import Vocabulary from "./stories/Vocabulary";
 import Sentence from "./stories/Sentence";
+import Dashboard from "./Dashboard";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/vocabulary/:storyId" component={Vocabulary} /> 
           <Route path="/sentence/:storyId" component={Sentence} />                    
           <Route path="/storyQuestions/:id" component={StoryQuestions} />
+          <Route path="/dashboard" component={Dashboard} />
         </Switch>
 
       </div>

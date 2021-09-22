@@ -29,6 +29,9 @@ export default function TagList() {
                     </MDBListGroupItem>
                   );
                 })}
+                <div style={{marginTop: "20px"}}>
+                <Link to={"/dashboard"}>Dashboard</Link>
+                </div>
               </MDBListGroup>
             </MDBCardText>
           </MDBCardBody>
