@@ -1,6 +1,9 @@
+import { faHome, faBookmark, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MDBContainer, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText } from "mdbreact";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import FlipContent from "./FlipContent";
 
 const StoryDetails = (props: any) => {
     let storyId = 0;
@@ -18,9 +21,9 @@ const StoryDetails = (props: any) => {
         { id: 1, storyId: 1, content: "Programmer can build their career in Upwork.", contentBangla: "প্রোগ্রামার আপওয়ার্ক এ তাদের ক্যারিয়ার গড়তে পারে।" },
         { id: 2, storyId: 1, content: "Know the application process in Upwork.", contentBangla: "আপওয়ার্ক এ আবেদন প্রক্রিয়া জানুন।" },
         { id: 3, storyId: 1, content: "Step 1 - Create your Upwork profile.", contentBangla: "ধাপ 1 - আপনার আপওয়ার্ক প্রোফাইল তৈরি করুন।" },
-        { id: 4, storyId: 1, content: "dialog 4 dialog 4", contentBangla: "" },
-        { id: 5, storyId: 1, content: "dialog 5", contentBangla: "" },
-        { id: 6, storyId: 1, content: "dialog 6", contentBangla: "" }
+        // { id: 4, storyId: 1, content: "dialog 4 dialog 4", contentBangla: "" },
+        // { id: 5, storyId: 1, content: "dialog 5", contentBangla: "" },
+        // { id: 6, storyId: 1, content: "dialog 6", contentBangla: "" }
     ];
 
     const showNoOfDialog = 2;
@@ -61,7 +64,8 @@ const StoryDetails = (props: any) => {
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{ padding: 0 }}>
+            {/*         
             <MDBContainer>
                 <MDBCard style={{ width: "100%", marginTop: "1rem" }}>
                     <MDBCardHeader color="primary-color deep-orange lighten-1">{storyData?.title}</MDBCardHeader>
@@ -112,6 +116,18 @@ const StoryDetails = (props: any) => {
                 </MDBCard>
 
             </MDBContainer>
+         */}
+
+            <FlipContent storyId={storyId} title={storyData?.title} content={dialogsData} />
+            <div className="bottomSection">
+                <div className="mobile-app-icon-bar">
+                    <a href="#">
+                        <FontAwesomeIcon icon={faHome} />
+                    </a>
+                    <a href="#"><FontAwesomeIcon icon={faBookmark} /></a>
+                    <a href="#"><FontAwesomeIcon icon={faUser} /></a>
+                </div>
+            </div>
         </div>
     );
 }

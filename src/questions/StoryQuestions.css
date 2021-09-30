@@ -3,11 +3,11 @@
   }
   
   body {
-    background: linear-gradient(
+    /* background: linear-gradient(
       90deg,
       hsla(183, 46%, 74%, 1) 0%,
       hsla(183, 100%, 29%, 1) 100%
-    );
+    ); */
     font-family: sans-serif;
   }
   
