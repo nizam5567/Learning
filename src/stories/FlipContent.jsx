@@ -124,7 +124,7 @@ class FlipContent extends React.Component {
                                         </div>
                                     </div>
                                     {(index+1) === this.props.content.length && <Link to={"/storyQuestions/" + this.props.storyId}>
-                                                <button type="button" className="btn btn-primary"
+                                                <button type="button" className="btn btn-secondary"
                                                     style={{ paddingLeft: "30px", paddingRight: "30px", 
                                                     position: "absolute", bottom: "50px", 
                                                     left: "calc(50% - 70px)" }}>Start Exam</button>

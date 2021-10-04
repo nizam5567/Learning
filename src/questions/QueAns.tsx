@@ -2,7 +2,7 @@ import React, { useRef, useState, forwardRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./StoryQuestions.css";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Toast, ToastContainer } from "react-bootstrap";
 
 export default function QueAns(props: any) {
   //console.log('props.queObj', props.queObj);
@@ -24,21 +24,26 @@ export default function QueAns(props: any) {
   let queIndex = 0;
 
   //column number for each rows
-  if (ansLength === 2) {
-    rowsColumns = [1, 2];
-  } else if (ansLength === 3) {
-    rowsColumns = [1, 2, 1];
-  } else if (ansLength === 4) {
-    rowsColumns = [2, 1, 2];
-    queIndex = 2;
-  }
+  // if (ansLength === 2) {
+  //   rowsColumns = [1, 2];
+  // } else if (ansLength === 3) {
+  //   rowsColumns = [1, 2, 1];
+  // } else if (ansLength === 4) {
+  //   rowsColumns = [2, 1, 2];
+  //   queIndex = 2;
+  // }
 
-  rows = rowsColumns.length;
+  // rows = rowsColumns.length;
+  rows = ansLength + 1;
 
   let elementIndex = 0;
 
   const [activeIndex, setActiveIndex] = useState(queIndex);
   const [isDragging, setIsDragging] = useState(false);
+  const [toasterBg, setToasterBg] = useState('success');
+  const [toasterMsg, setToasterMsg] = useState('Your anser is correct.');
+  const [isCorrectAns, setIsCorrectAns] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
 
   const dialogsData = [
     { storyId: 1, content: "dialog 1", },
@@ -107,10 +112,64 @@ export default function QueAns(props: any) {
     }, 500);
   };
 
+
+  const selectAns = (evt: any) => {
+    //console.log("clicked", evt, evt.target.dataset.iscorrect);
+    const isCorrect = evt.target.dataset.iscorrect === "true";
+
+    //console.log("klkl ", typeof (isCorrect), isCorrect);
+    const elm = document.querySelector('.correctAns') || document.querySelector('.wrongAns');
+    console.log("exist", elm);
+
+    if (elm) {
+      console.log("exist");
+      return;
+    }
+
+    if (isCorrect) {
+      evt.target.classList.add("correctAns");
+      //setToasterBg('success');
+      //setToasterMsg('Your answer is correct');
+      setIsCorrectAns(true);
+      setTimeout(() => {
+        clearValues();
+        props.setQue(props.queObj, true);
+      }, 500);
+    } else {
+      setToasterBg('danger');
+      evt.target.classList.add("wrongAns");
+      setTimeout(() => {
+        const correctElm = document.querySelector("[data-iscorrect='true']");
+        (correctElm as any).classList.add('correctAns');
+      }, 500);
+
+      setToasterMsg('Your answer is wrong');
+      setIsCorrectAns(false);
+      setToastShow(true);
+    }
+    setIsSelected(true);
+
+    // setToastShow(true);
+  };
+
   const [show, setShow] = useState(false);
+  const [toastShow, setToastShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const clearValues = () => {
+    const elm = document.querySelector(".correctAns");
+    (elm as any).classList.remove('correctAns');
+    const elmWrong = document.querySelector(".wrongAns");
+    (elmWrong as any)?.classList.remove('wrongAns');
+    setIsSelected(false);
+  };
+
+  const goNextQue = () => {
+    clearValues();
+    props.setQue(props.queObj, isCorrectAns);
+  };
 
   let answerIndex = 0;
 
@@ -121,7 +180,7 @@ export default function QueAns(props: any) {
         let colNumber = 0;
 
         return (<div key={i} className={"row " + (rowsColumns[i] === 1 ? "justify-content-center" : "")}>
-          {[...Array(rowsColumns[i])].map((cE, cIndex) => {
+          {/* {[...Array(rowsColumns[i])].map((cE, cIndex) => {
             colNumber++;
 
             return <div key={cIndex} className={(elementIndex !== queIndex ? "col-6" : "col-4")}>
@@ -140,16 +199,43 @@ export default function QueAns(props: any) {
               />
             </div>;
           }
-          )}
+          )} */}
+
+          <div className={"col-12"}>
+            <Cell
+              index={elementIndex}
+              key={`cell-${elementIndex}`}
+              activeIndex={activeIndex}
+              queIndex={queIndex}
+              onDragStart={dragStart}
+              onDragEnd={dragEnd}
+              isDragging={isDragging}
+              onClick={selectAns}
+              isCorrect={queIndex !== elementIndex ? queObj.answers[answerIndex].isCorrect : false}
+              //text={queIndex === elementIndex ? props.question : props.answers[answerIndex++]}
+              text={queIndex === elementIndex ? queObj.title : queObj.answers[answerIndex++].title}
+              ref={cells[elementIndex++]}
+            />
+          </div>
+
+
         </div>);
       })}
 
+      <div style={{ marginTop: "20px" }}>
+        <Button variant="secondary" onClick={handleShow}
+          style={{ marginRight: "20px" }}>
+          Show Story
+        </Button>
 
-      <Button variant="primary" onClick={handleShow}
-        style={{ marginTop: "20px" }}>
-        Show Story
-      </Button>
-
+        {!isCorrectAns && isSelected && <Button variant="secondary" onClick={goNextQue}
+          style={{ marginRight: "20px" }}>
+          Next
+        </Button>}
+        {!isCorrectAns && isSelected && <Button variant="secondary">
+          Explanation
+        </Button>}
+      </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Story</Modal.Title>
@@ -174,6 +260,14 @@ export default function QueAns(props: any) {
         </Modal.Footer>
       </Modal>
 
+      <ToastContainer className="p-3" position={'top-center'}>
+        <Toast className="d-inline-block m-1" bg={toasterBg} onClose={() => setToastShow(false)} show={toastShow} delay={3000} autohide>
+
+          <Toast.Body className={'text-white'}>
+            {toasterMsg}
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 }
@@ -205,7 +299,7 @@ const fromAnimatePoint = [
 ];
 
 export const Cell = forwardRef(
-  ({ index, activeIndex, queIndex, onDragStart, onDragEnd, isDragging, isCorrect, text }: any, ref: any) => {
+  ({ index, activeIndex, queIndex, onDragStart, onDragEnd, onClick, isDragging, isCorrect, text }: any, ref: any) => {
     return (
       <motion.div
         className={"cell center " + (index === queIndex ? "cellQue" : "")}
@@ -218,7 +312,8 @@ export const Cell = forwardRef(
         animate={{ x: '0px', y: '0px', opacity: 1, scale: 1, border: index !== queIndex ? isDragging ? "2px dashed #008E95" : "2px solid #fff" : "" }}
         transition={{ duration: 1 }}
         data-iscorrect={isCorrect}
-        style={index === queIndex ? { width: '100%', zIndex: 100 } : {}}
+        onClick={onClick}
+      //style={index === queIndex ? { width: '100%', zIndex: 100 } : {}}        
       >
         {index !== queIndex && text}
         {activeIndex === index && (

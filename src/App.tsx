@@ -11,6 +11,7 @@ import StoryDetails from "./stories/StoryDetails";
 import Vocabulary from "./stories/Vocabulary";
 import Sentence from "./stories/Sentence";
 import Dashboard from "./Dashboard";
+import Result from "./Result";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/sentence/:storyId" component={Sentence} />                    
           <Route path="/storyQuestions/:id" component={StoryQuestions} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/result" component={Result} />
         </Switch>
 
       </div>

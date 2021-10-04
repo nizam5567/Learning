@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MDBContainer, MDBCard, MDBCardHeader, MDBCardBody, MDBCardText } from "mdbreact";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import BottomLinks from "../common/BottomLinks";
 import FlipContent from "./FlipContent";
 
 const StoryDetails = (props: any) => {
@@ -119,15 +120,7 @@ const StoryDetails = (props: any) => {
          */}
 
             <FlipContent storyId={storyId} title={storyData?.title} content={dialogsData} />
-            <div className="bottomSection">
-                <div className="mobile-app-icon-bar">
-                    <a href="#">
-                        <FontAwesomeIcon icon={faHome} />
-                    </a>
-                    <a href="#"><FontAwesomeIcon icon={faBookmark} /></a>
-                    <a href="#"><FontAwesomeIcon icon={faUser} /></a>
-                </div>
-            </div>
+            <BottomLinks />
         </div>
     );
 }

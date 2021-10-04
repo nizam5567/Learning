@@ -26,6 +26,7 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-spring": "^9.2.4",
+    "react-toastr": "^3.0.0",
     "typescript": "^4.4.2",
     "web-vitals": "^1.1.2"
   },
@@ -57,6 +58,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.8",
+    "@types/react-toastr": "^3.0.5",
     "gh-pages": "^3.2.3"
   }
 }

@@ -1,0 +1,27 @@
+.dashboardLearnedBox {
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.dashboardLearnedBox .title{
+
+}
+
+.dashboardLearnedBox p{
+    font-size: 32px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 0;
+}
+.dashboardBottom .bottomSection .mobile-app-icon-bar{
+    background-color: #f5f5f5;
+}
+
+.dashboardLesson .tile{
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    text-align: center;
+}

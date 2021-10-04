@@ -5,6 +5,9 @@ import QueAns from "./QueAns";
 import CorrectAns from "./CorrectAns";
 import Result from "../Result";
 import { Button, Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 interface Question {
   id: number;
@@ -75,6 +78,13 @@ const StoryQuestions = (props: any) => {
     { id: 6, title: "Sample que 6?", contentId: 2, isCompleted: false, }
   ];
 
+  const contentData = [
+    { id: 1, title: "Sample story title 1", body: "Sample details 1", tagId: 1, storyCategoryId: 1 },
+    { id: 2, title: "Sample story title 2", body: "Sample details 2", tagId: 1, storyCategoryId: 1 },
+    { id: 3, title: "Sample story title 3", body: "Sample details 3", tagId: 1, storyCategoryId: 1 },
+  ];
+  const storyData = contentData.find(item => item.id === storyId);
+
   const totalQue = 4;
   const pointsForEachQue = 10;
   const totalPoints = totalQue * pointsForEachQue;
@@ -117,11 +127,12 @@ const StoryQuestions = (props: any) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleQueChange = (queObj: any, isAnsCorrect: string) => {
+  const handleQueChange = (queObj: any, isAnsCorrect: boolean) => {
     const updatedQuestions = storyQuestions.map((item) => item.id === queObj.id ? { ...item, isCompleted: true } : item)
     setStoryQuestions(updatedQuestions);
-
-    if (isAnsCorrect === "true") {
+    console.log(typeof (isAnsCorrect), isAnsCorrect);
+    //if (isAnsCorrect === "true") {
+    if (isAnsCorrect) {
       let updatedResult = result + pointsForEachQue;
       setResult(updatedResult);
       // console.log("updatedResult", updatedResult);
@@ -143,9 +154,10 @@ const StoryQuestions = (props: any) => {
       return item.isCompleted === false;
     });
 
-    setGivenQueAnsObj({ queObj: queObj, isAnsCorrect: isAnsCorrect === "true" });
+    //setGivenQueAnsObj({ queObj: queObj, isAnsCorrect: isAnsCorrect === "true" });
+    setGivenQueAnsObj({ queObj: queObj, isAnsCorrect: isAnsCorrect });
     //setShowCorrectAnsScreen(true);
-    setShow(true);
+    //setShow(true);
 
     // setTimeout(() => {
     //   setShowCorrectAnsScreen(false);
@@ -188,9 +200,10 @@ const StoryQuestions = (props: any) => {
       }
 
       setResultDetails(userResultDetails);
-      setTimeout(() => {
-        setIsCompleted(true);
-      }, 2000);
+      // setTimeout(() => {
+      //   setIsCompleted(true);
+      // }, 2000);
+      setIsCompleted(true);
     }
   }
 
@@ -199,25 +212,38 @@ const StoryQuestions = (props: any) => {
     const bar = questions.map((item, i) => {
       return (<div className={"queBar " + (i < count ? "fillQueBar" : "")}></div>);
     });
-    return <div className="queBarContainer">{bar}</div>;
-  }
+    return <div className="row queBarContainer">
+      <div className="col-10">{bar}</div>
+      <div className="col-2" style={{ position: "relative", top: "-10px", right: 0, textAlign: "right", fontSize: "18px" }}>
+        <Link to={"/story/"+storyId} style={{color:"red"}}><FontAwesomeIcon icon={faWindowClose} /></Link>
+      </div>
+    </div>;
+  };
+
+  const storyTitleSection = () => {
+    return (<div className="row">
+      <div className="col-12" style={{ textAlign: "center", fontWeight: "bold", color: "#666", marginBottom: "10px" }}>
+        {storyData?.title}
+      </div>
+    </div>);
+  };
 
   return (
-    <div className="container" style={{ marginTop: "50px" }}>
+    <div className="container" style={{ marginTop: "20px" }}>
 
       {/* {!isCompleted ? (!showCorrectAnsScreen && <>{showQueNumberBar(storyQuestions)}<AnimateSharedLayout>
         <QueAns queObj={activeQueData}
           setQue={handleQueChange} />
       </AnimateSharedLayout></>) : <Result result={result} resultDetails={resultDetails} totalPoints={totalPoints} />
       } */}
-      {!isCompleted ? (!show && <>{showQueNumberBar(storyQuestions)}<AnimateSharedLayout>
+      {!isCompleted ? (!show && <>{storyTitleSection()} {showQueNumberBar(storyQuestions)}<AnimateSharedLayout>
         <QueAns queObj={activeQueData}
           setQue={handleQueChange} />
       </AnimateSharedLayout></>) : <Result result={result} resultDetails={resultDetails} totalPoints={totalPoints} />
       }
 
       {/* {showCorrectAnsScreen && <CorrectAns givenQueAnsObj={givenQueAnsObj} />} */}
-     
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Result</Modal.Title>

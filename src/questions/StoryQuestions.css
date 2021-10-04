@@ -39,21 +39,21 @@
     background: #fff;
     border-radius: 8px;
     /* height: 100px; */
-    min-height: 200px;
+    min-height: 100px;
     width: auto;
     color: #333;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     position: relative;
-
+    margin: 5px 0;
   }
 
   .cellQue {
     background: none;
     border: 0;
     box-shadow: none;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    min-height: 100px !important;
+    /* margin-top: 50px;
+    margin-bottom: 50px; */
+    min-height: 80px !important;
   }
   
   .draggable {
@@ -74,11 +74,11 @@
   }
 
   .queBarContainer {
-    background: #fff;
+    /* background: #fff; */
     width: 100%;
     height: 30px;
-    border-radius: 50px;
-    margin-bottom: 20px;
+    /* border-radius: 50px; */
+    /* margin-bottom: 20px; */
     overflow: hidden;
     padding: 10px 0 10px 20px;
   }
@@ -94,5 +94,15 @@
 
   .fillQueBar {
     background: #085ba3;
+  }
+
+  .correctAns {
+    background-color: green;
+    color: #fff;
+  }
+
+  .wrongAns {
+    background-color: red;
+    color: #fff;
   }
   

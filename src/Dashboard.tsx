@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBCard, MDBCardBody, MDBCardHeader, MDBCardText } from "mdbreact";
 import { Link } from "react-router-dom";
 import { ResponsiveLine } from '@nivo/line';
+import { faHome, faBookmark, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BottomLinks from "./common/BottomLinks";
+import "./Dashboard.css"
 
 
 export default function Dashboard(props: any) {
-    const data = [        
+    const data = [
         {
-            "id": "Performance Chart",
+            "id": "Chart",
             "color": "hsl(349, 70%, 50%)",
             "data": [
                 {
@@ -42,17 +46,17 @@ export default function Dashboard(props: any) {
                     "x": "Story 8",
                     "y": 60
                 },
-                
+
             ]
         }
     ];
     return (
-        <div className="container" style={{ height: "500px", }}>
-            <MDBContainer>
+        <div className="container dashboard" style={{ backgroundColor: "#f5f5f5" }}>
+            {/* <MDBContainer>
                 <MDBCard style={{ width: "100%", marginTop: "1rem" }}>
                     <MDBCardHeader color="primary-color deep-orange lighten-1">Dashboard</MDBCardHeader>
                     <MDBCardBody>
-                        {/* <MDBCardTitle>Special title treatment</MDBCardTitle> */}
+                        
                         <MDBCardText>
                         </MDBCardText>
                         <div style={{ height: "500px" }}>
@@ -61,7 +65,73 @@ export default function Dashboard(props: any) {
                     </MDBCardBody>
                 </MDBCard>
 
-            </MDBContainer>
+            </MDBContainer> */}
+            <div className="container">
+                <div className="container bootstrap snippets bootdey appStoryContent">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="userName">Hello John Doe</div>
+                            <div className="tagLine">What do you want to learn?</div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div style={{ height: "200px" }}>
+                                <MyResponsiveLine data={data} />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row justify-content-center">
+                        <div className="col-10">
+                            <div className="row">
+                                <div className="col-6">
+                                    <div className="tile dashboardLearnedBox">
+                                        <div className="title">Story Learned</div>
+                                        <p className="countParticipationDashboard">20</p>
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <div className="tile dashboardLearnedBox">
+                                        <div className="title">Lesson Learned</div>
+                                        <p className="countParticipationDashboard">12</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-12">
+                            <h2><strong>Lesson</strong></h2>
+                        </div>
+                    </div>
+                    <div className="row dashboardLesson">
+                        <div className="col-4">
+                            <div className="tile ">
+                                <h3 className="title">Tense Learning</h3>
+                                <p className="countParticipation">20 users learned</p>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="tile" >
+                                <h3 className="title">Sentence Learning</h3>
+                                <p className="countParticipation">12 users learned</p>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="tile ">
+                                <h3 className="title">Paragraph</h3>
+                                <p className="countParticipation">6 users learned</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="dashboardBottom">
+                <BottomLinks />
+                </div>
+            </div>
+
         </div>
     );
 }
@@ -70,7 +140,7 @@ export const MyResponsiveLine = ({ data }: any) => (
     <ResponsiveLine
         data={data}
         //margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        margin={{ top: 50, right: 200, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 20, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         //yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
         yScale={{ type: 'linear', min: 0, max: 100, stacked: true, reverse: false }}
@@ -108,31 +178,31 @@ export const MyResponsiveLine = ({ data }: any) => (
         pointLabelYOffset={-12}
         enableArea={true}
         useMesh={true}
-        legends={[
-            {
-                anchor: 'bottom-right',
-                direction: 'column',
-                justify: false,
-                translateX: 100,
-                translateY: 0,
-                itemsSpacing: 0,
-                itemDirection: 'left-to-right',
-                itemWidth: 80,
-                itemHeight: 20,
-                itemOpacity: 0.75,
-                symbolSize: 12,
-                symbolShape: 'circle',
-                symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemBackground: 'rgba(0, 0, 0, .03)',
-                            itemOpacity: 1
-                        }
-                    }
-                ]
-            }
-        ]}
+        // legends={[
+        //     {
+        //         anchor: 'bottom-right',
+        //         direction: 'column',
+        //         justify: false,
+        //         translateX: 100,
+        //         translateY: 0,
+        //         itemsSpacing: 0,
+        //         itemDirection: 'left-to-right',
+        //         itemWidth: 80,
+        //         itemHeight: 20,
+        //         itemOpacity: 0.75,
+        //         symbolSize: 12,
+        //         symbolShape: 'circle',
+        //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
+        //         effects: [
+        //             {
+        //                 on: 'hover',
+        //                 style: {
+        //                     itemBackground: 'rgba(0, 0, 0, .03)',
+        //                     itemOpacity: 1
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // ]}
     />
 );
