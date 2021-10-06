@@ -8,8 +8,7 @@ const BottomLinks = () => {
         <div className="bottomSection">
             <div className="mobile-app-icon-bar">                
                 <Link to={"/"}><FontAwesomeIcon icon={faHome} /></Link>
-                <a href="#"><FontAwesomeIcon icon={faBookmark} /></a>
-                {/* <a href="#"><FontAwesomeIcon icon={faUser} /></a> */}
+                <Link to={"/favorite"}><FontAwesomeIcon icon={faBookmark} /></Link>                
                 <Link to={"/dashboard"}><FontAwesomeIcon icon={faUser} /></Link>
             </div>
         </div>

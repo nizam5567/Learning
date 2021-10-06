@@ -136,16 +136,16 @@ export default function QueAns(props: any) {
         props.setQue(props.queObj, true);
       }, 500);
     } else {
-      setToasterBg('danger');
+      //setToasterBg('danger');
       evt.target.classList.add("wrongAns");
       setTimeout(() => {
         const correctElm = document.querySelector("[data-iscorrect='true']");
         (correctElm as any).classList.add('correctAns');
       }, 500);
 
-      setToasterMsg('Your answer is wrong');
+      //setToasterMsg('Your answer is wrong');
       setIsCorrectAns(false);
-      setToastShow(true);
+      //setToastShow(true);
     }
     setIsSelected(true);
 

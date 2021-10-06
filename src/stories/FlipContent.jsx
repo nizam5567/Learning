@@ -29,14 +29,22 @@ const Page = React.forwardRef((props, ref) => {
         </div>
     );
 });
-
+const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height
+    };
+};
 class FlipContent extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            page: 0,
+            page: 1,
             totalPage: 0,
+            windowHeight: 733,
+            isSetWindowHeight: false,
         };
     }
 
@@ -57,22 +65,53 @@ class FlipContent extends React.Component {
 
     onPage = (e) => {
         this.setState({
-            page: e.data,
+            // page: e.data,
+            page: e.data + 1,
         });
     };
 
     componentDidMount() {
         let count = 0;
-        
+
         setTimeout(() => {
             if (this.flipBook && this.flipBook.pageFlip()) {
                 count = this.flipBook.pageFlip().getPageCount();
             }
+
             this.setState({
                 totalPage: count,//this.flipBook.getPageFlip().getPageCount(),
             });
-        }, 100);        
+        }, 100);
+
+        //setTimeout(() => {          
+            
+            const dimension = getWindowDimensions();
+
+            let height = 733;
+            if (dimension) {
+                if (dimension.width <= 450) {
+                    height = 900;
+                } else if (dimension.width >= 450 && dimension.width < 767) {
+                    height = 733;
+                } else if (dimension.width >= 768 && dimension.width < 990) {
+                    height = 1000;
+                } else if (dimension.width >= 990 && dimension.width < 1150) {
+                    height = 700;
+                } else {
+                    height = 500;
+                }
+            }
+
+            // console.log("height - ", height);
+            this.setState({
+                windowHeight: height,
+                isSetWindowHeight: true,
+            });
+            
+        //}, 50);
     }
+
+
 
     render() {
         return (
@@ -84,9 +123,9 @@ class FlipContent extends React.Component {
                 </div>
                 <div style={{ position: "relative" }}>
                     <div className="container" style={{ margin: "0 auto", width: "calc(100% - 55px)" }}>
-                        <HTMLFlipBook
+                        {this.state.isSetWindowHeight && <HTMLFlipBook
                             width={550}
-                            height={900}
+                            height={this.state.windowHeight}
                             size="stretch"
                             minWidth={250}
                             maxWidth={1000}
@@ -109,7 +148,7 @@ class FlipContent extends React.Component {
                     <Page number={4}>Lorem ipsum...</Page> */}
                             {this.props.content.length > 0 && this.props.content.map((item, index) => {
                                 return (
-                                    <Page number={index+1} key={item.id}><div>
+                                    <Page number={index + 1} key={item.id}><div>
                                         <div className={"row "}>
                                             <div className={"col-12 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>
                                                 {item.content}
@@ -123,18 +162,21 @@ class FlipContent extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    {(index+1) === this.props.content.length && <Link to={"/storyQuestions/" + this.props.storyId}>
-                                                <button type="button" className="btn btn-secondary"
-                                                    style={{ paddingLeft: "30px", paddingRight: "30px", 
-                                                    position: "absolute", bottom: "50px", 
-                                                    left: "calc(50% - 70px)" }}>Start Exam</button>
-                                            </Link>}
+                                        {(index + 1) === this.props.content.length && <Link to={"/storyQuestions/" + this.props.storyId}>
+                                            <button type="button" className="btn btn-secondary"
+                                                style={{
+                                                    paddingLeft: "30px", paddingRight: "30px",
+                                                    position: "absolute", bottom: "50px",
+                                                    left: "calc(50% - 70px)"
+                                                }}>Start Exam</button>
+                                        </Link>}
                                     </Page>);
                             })}
 
                             {/* <PageCover>THE END</PageCover> */}
 
                         </HTMLFlipBook>
+                        }
                     </div>
                     <button type="button" onClick={this.prevButtonClick} className="prevBtn">
                         <FontAwesomeIcon icon={faChevronLeft} />
@@ -143,14 +185,14 @@ class FlipContent extends React.Component {
                         <FontAwesomeIcon icon={faChevronRight} />
                     </button>
                 </div>
-                <div className="container" style={{textAlign: "center", marginTop: "5px"}}>
+                <div className="container" style={{ textAlign: "center", marginTop: "5px" }}>
                     <div>
 
                         {/* <button type="button" onClick={this.prevButtonClick}>
                             Previous page
                         </button> */}
 
-                        [<span>{this.state.page}</span> of 
+                        [<span>{this.state.page}</span> of
                         <span> {this.state.totalPage}</span>]
 
                         {/* <button type="button" onClick={this.nextButtonClick}>

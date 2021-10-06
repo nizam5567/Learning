@@ -1,5 +1,6 @@
 import { MDBCard, MDBCardBody, MDBCardHeader, MDBContainer } from "mdbreact";
 import { Link } from "react-router-dom";
+import BottomLinks from "../common/BottomLinks";
 
 const Vocabulary = (props: any) => {
     let storyId = 0;
@@ -40,21 +41,28 @@ const Vocabulary = (props: any) => {
 
                         </tbody>
                     </table>
-                    <div>
-                        <Link to={"/sentence/" + storyId}>
-                            <button type="button" className="btn btn-primary"
-                                style={{ paddingLeft: "30px", paddingRight: "30px", marginRight: "20px" }}>Learn Sentence</button>
-                        </Link>
-                        <Link to={"/storyQuestions/" + storyId}>
-                            <button type="button" className="btn btn-primary"
-                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Start Exam</button>
-                        </Link>
-                    </div>
+
                 </MDBCardBody>
             </MDBCard>
 
         </MDBContainer>
-
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <div style={{ position: "absolute", bottom: "100px", left: 0, textAlign: "center", width: "100%" }}>
+                        <Link to={"/sentence/" + storyId}>
+                            <button type="button" className="btn btn-secondary"
+                                style={{ paddingLeft: "30px", paddingRight: "30px", marginRight: "20px" }}>Learn Sentence</button>
+                        </Link>
+                        <Link to={"/storyQuestions/" + storyId}>
+                            <button type="button" className="btn btn-secondary"
+                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Start Exam</button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <BottomLinks />
     </>);
 }
 

@@ -7,6 +7,17 @@ import "./Result.css";
 
 const Result = (props: any) => {
     console.log("resultDetails", props.resultDetails);
+
+    let resultImage = "/images/goodJob.png";
+
+    let achievedPointsPercentage = (props.resultDetails.result * 100) / props.totalPoints;
+
+    if(achievedPointsPercentage <= 33) {
+        resultImage = "/images/fail.jpg";
+    } else if (achievedPointsPercentage < 70) {
+        resultImage = "/images/improve.jpg";
+    }
+
     return (
         <div className="container">
             {/* <MDBContainer>
@@ -29,8 +40,8 @@ const Result = (props: any) => {
             </MDBContainer> */}
 
             <div className="row">
-                <div className="col-12" style={{ textAlign: "center", }}>
-                    <img alt="Good Job" src={"/images/goodJob.png"} />
+                <div className="col-12" style={{ textAlign: "center", marginBottom: "10px" }}>
+                    <img alt="Good Job" src={resultImage} height="250" />
                 </div>
             </div>
 
@@ -39,7 +50,7 @@ const Result = (props: any) => {
                     <Card style={{ textAlign: "center" }}>
                         <Card.Header>Your Score</Card.Header>
                         <Card.Body>
-                            <Card.Title>{props.result}</Card.Title>
+                            <Card.Title>{props.resultDetails.result}</Card.Title>
                             <Card.Text>
                                 Out of {props.totalPoints}
                             </Card.Text>
@@ -51,19 +62,19 @@ const Result = (props: any) => {
             <div className="row resultItemBoxContainer">
                 <div className="col-4">
                     <div className="resultItemBox resQue">
-                        <div className="title">10</div>
+                        <div className="title">{props.resultDetails.totalQue}</div>
                         <p className="">Questions</p>
                     </div>
                 </div>
                 <div className="col-4">
                     <div className="resultItemBox resCorrect">
-                        <div className="title">7</div>
+                        <div className="title">{props.resultDetails.countCorrectAns}</div>
                         <p className="">Correct</p>
                     </div>
                 </div>
                 <div className="col-4">
                     <div className="resultItemBox resWrong">
-                        <div className="title">3</div>
+                        <div className="title">{(props.resultDetails.totalQue - props.resultDetails.countCorrectAns)}</div>
                         <p className="">Wrong</p>
                     </div>
                 </div>

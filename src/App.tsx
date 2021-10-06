@@ -12,28 +12,32 @@ import Vocabulary from "./stories/Vocabulary";
 import Sentence from "./stories/Sentence";
 import Dashboard from "./Dashboard";
 import Result from "./Result";
+import Login from "./Login";
+import PrivateRoute from "./Utils/PrivateRoute";
+import PublicRoute from "./Utils/PublicRoute";
+import Favorite from "./stories/Favorite";
 
 function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App" style={{paddingBottom: "100px"}}>
         {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />        
       </header> */}
-        {/* <StoryList />
-        <DragDropPattern1 /> */}
-
+        
         <Switch>
           <Route exact path="/" component={TagList} />
-          <Route exact path="/storyCategory/:tagId" component={StoryCategoryList} />
-          <Route exact path="/content/:tagId/:storyCategoryId" component={ContentList} />
-          <Route path="/story/:id" component={StoryDetails} />
-          <Route path="/vocabulary/:storyId" component={Vocabulary} /> 
-          <Route path="/sentence/:storyId" component={Sentence} />                    
-          <Route path="/storyQuestions/:id" component={StoryQuestions} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/result" component={Result} />
+          <PublicRoute path="/login" component={Login} />
+          <PrivateRoute exact path="/storyCategory/:tagId" component={StoryCategoryList} />
+          <PrivateRoute exact path="/content/:tagId/:storyCategoryId" component={ContentList} />
+          <PrivateRoute path="/story/:id" component={StoryDetails} />
+          <PrivateRoute path="/vocabulary/:storyId" component={Vocabulary} /> 
+          <PrivateRoute path="/sentence/:storyId" component={Sentence} />                    
+          <PrivateRoute path="/storyQuestions/:id" component={StoryQuestions} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/result" component={Result} />          
+          <PrivateRoute path="/favorite" component={Favorite} />          
         </Switch>
 
       </div>

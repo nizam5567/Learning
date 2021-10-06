@@ -1,5 +1,6 @@
 import { MDBCard, MDBCardBody, MDBCardHeader, MDBContainer } from "mdbreact";
 import { Link } from "react-router-dom";
+import BottomLinks from "../common/BottomLinks";
 
 const Sentence = (props: any) => {
     let storyId = 0;
@@ -10,7 +11,7 @@ const Sentence = (props: any) => {
     const sentenceList = [
         { id: 1, contentId: 1, sentence: "Sample sentence 1", sentenceBangla: "পড়ুন" },
         { id: 2, contentId: 1, sentence: "Sample sentence 2", sentenceBangla: "শিখুন" },
-        { id: 3, contentId: 1, sentence: "Sample sentence 3", sentenceBangla: "লিখুন" },        
+        { id: 3, contentId: 1, sentence: "Sample sentence 3", sentenceBangla: "লিখুন" },
     ];
 
     return (<>
@@ -38,17 +39,24 @@ const Sentence = (props: any) => {
 
                         </tbody>
                     </table>
-                    <div>
-                        <Link to={"/storyQuestions/" + storyId}>
-                            <button type="button" className="btn btn-primary"
-                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Start Exam</button>
-                        </Link>
-                    </div>
+
                 </MDBCardBody>
             </MDBCard>
 
         </MDBContainer>
-
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <div style={{ position: "absolute", bottom: "100px", left: 0, textAlign: "center", width: "100%" }}>
+                        <Link to={"/storyQuestions/" + storyId}>
+                            <button type="button" className="btn btn-secondary"
+                                style={{ paddingLeft: "30px", paddingRight: "30px" }}>Start Exam</button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <BottomLinks />
     </>);
 }
 

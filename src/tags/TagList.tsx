@@ -4,12 +4,13 @@ import { MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBContainer, MDBList
 import './TagList.css';
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faHome } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark, faUser } from '@fortawesome/free-regular-svg-icons';
 import BottomLinks from "../common/BottomLinks";
 import { Modal, Button } from "react-bootstrap";
 import CorrectAns from "../questions/CorrectAns";
 import { useHistory } from "react-router-dom";
+import { getToken } from "../Utils/Common";
 
 export default function TagList() {
   const tagData = [
@@ -26,6 +27,22 @@ export default function TagList() {
     { id: 6, title: "Sample Story", readCount: 15, tileColor: "purple" },
   ];
 
+  const favoriteItem = [
+    { id: 1, contentId: 1, userId: 1 },
+    { id: 2, contentId: 2, userId: 1 },
+    { id: 3, contentId: 4, userId: 1 },
+  ];
+
+  const stories = storyCategoriesData.map((item: any) => {
+    item.isFavorite = false;
+    if (favoriteItem.find((favItem) => favItem.contentId === item.id)) {
+      item.isFavorite = true;
+    }
+    return item;
+  });
+
+  const [storiesData, setStoriesData] = useState(stories);
+  // console.log(stories);
   // const [tags, setTags] = useState(tagData);
   const [contentId, setContentId] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -36,10 +53,25 @@ export default function TagList() {
     setShowModal(true);
   };
 
+  const handleFavorite = (contentId: number) => {
+    const stories = storiesData.map((item: any) => {
+      return item.id === contentId ? (item.isFavorite === false ? { ...item, isFavorite: true } : { ...item, isFavorite: false }) : item;
+    });
+    setStoriesData(stories);
+  };
+
   const history = useHistory();
   const routeChangeToStory = () => {
     let path = "/story/" + contentId;
     history.push(path);
+  };
+
+  let userName = "Guest";
+  let showFavorite = false;
+  const token = getToken();
+  if (token) {
+    userName = "John Doe";
+    showFavorite = true;
   }
 
   return (
@@ -48,7 +80,7 @@ export default function TagList() {
       <div className="container bootstrap snippets bootdey appStoryContent">
         <div className="row">
           <div className="col-md-12">
-            <div className="userName">Hello John Doe</div>
+            <div className="userName">Hello {userName}</div>
             <div className="tagLine">What do you want to learn?</div>
           </div>
         </div>
@@ -64,9 +96,9 @@ export default function TagList() {
               <p>Hello Purple, this is a colored tile.</p>
             </div>
           </div> */}
-          {storyCategoriesData.length ? storyCategoriesData.map((item, index) => {
+          {storiesData.length ? storiesData.map((item, index) => {
             return (
-              <div className="col-4" key={index}>
+              <div className="col-4" key={index} style={{ position: "relative" }}>
                 {/* <Link to={"/story/" + item.id}>
                   <div className={"tile " + item.tileColor}>
                     <div className="title">{item.title}</div>
@@ -80,6 +112,11 @@ export default function TagList() {
                     <p className="countParticipation">{item.readCount} users learned</p>
                   </div>
                 </div>
+                {showFavorite && <div className={"favoriteItem " + (item.isFavorite ? "favoriteItemActive" : "")}
+                  onClick={() => handleFavorite(item.id)}>
+                  <FontAwesomeIcon icon={faHeart} />
+                </div>}
+
               </div>
             );
           }) : <h1>Empty content</h1>}
@@ -136,11 +173,14 @@ export default function TagList() {
           <Modal.Title>Story Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          </div>
+          <div style={{ margin: "10px 0", fontWeight: "bold" }}>Number of user participation: 10</div>
+          <div style={{ margin: "10px 0", fontWeight: "bold" }}>Reting: 4.5</div>
         </Modal.Body>
-        <Modal.Footer>          
+        <Modal.Footer>
           <Button variant="secondary" onClick={routeChangeToStory}>
-            Start Story
+            Read Story
           </Button>
           <Button variant="secondary" onClick={handleClose}>
             Close

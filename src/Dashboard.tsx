@@ -6,6 +6,7 @@ import { faHome, faBookmark, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BottomLinks from "./common/BottomLinks";
 import "./Dashboard.css"
+import { removeUserSession } from "./Utils/Common";
 
 
 export default function Dashboard(props: any) {
@@ -50,8 +51,15 @@ export default function Dashboard(props: any) {
             ]
         }
     ];
+
+    // handle click event of logout button
+    const handleLogout = () => {
+        removeUserSession();
+        props.history.push('/login');
+    }
+
     return (
-        <div className="container dashboard" style={{ backgroundColor: "#f5f5f5" }}>
+        <div className="container dashboard" style={{ backgroundColor: "#f5f5f5", paddingBottom: "20px" }}>
             {/* <MDBContainer>
                 <MDBCard style={{ width: "100%", marginTop: "1rem" }}>
                     <MDBCardHeader color="primary-color deep-orange lighten-1">Dashboard</MDBCardHeader>
@@ -69,9 +77,12 @@ export default function Dashboard(props: any) {
             <div className="container">
                 <div className="container bootstrap snippets bootdey appStoryContent">
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-9">
                             <div className="userName">Hello John Doe</div>
                             <div className="tagLine">What do you want to learn?</div>
+                        </div>
+                        <div className="col-3" style={{paddingTop: "60px"}}>
+                            <input type="button" onClick={handleLogout} value="Logout" />
                         </div>
                     </div>
                     <div className="row">
@@ -103,7 +114,7 @@ export default function Dashboard(props: any) {
 
                     <div className="row">
                         <div className="col-md-12">
-                            <h2><strong>Lesson</strong></h2>
+                            <h2><strong>Suggestion</strong></h2>
                         </div>
                     </div>
                     <div className="row dashboardLesson">
@@ -128,7 +139,7 @@ export default function Dashboard(props: any) {
                     </div>
                 </div>
                 <div className="dashboardBottom">
-                <BottomLinks />
+                    <BottomLinks />
                 </div>
             </div>
 
@@ -178,31 +189,31 @@ export const MyResponsiveLine = ({ data }: any) => (
         pointLabelYOffset={-12}
         enableArea={true}
         useMesh={true}
-        // legends={[
-        //     {
-        //         anchor: 'bottom-right',
-        //         direction: 'column',
-        //         justify: false,
-        //         translateX: 100,
-        //         translateY: 0,
-        //         itemsSpacing: 0,
-        //         itemDirection: 'left-to-right',
-        //         itemWidth: 80,
-        //         itemHeight: 20,
-        //         itemOpacity: 0.75,
-        //         symbolSize: 12,
-        //         symbolShape: 'circle',
-        //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
-        //         effects: [
-        //             {
-        //                 on: 'hover',
-        //                 style: {
-        //                     itemBackground: 'rgba(0, 0, 0, .03)',
-        //                     itemOpacity: 1
-        //                 }
-        //             }
-        //         ]
-        //     }
-        // ]}
+    // legends={[
+    //     {
+    //         anchor: 'bottom-right',
+    //         direction: 'column',
+    //         justify: false,
+    //         translateX: 100,
+    //         translateY: 0,
+    //         itemsSpacing: 0,
+    //         itemDirection: 'left-to-right',
+    //         itemWidth: 80,
+    //         itemHeight: 20,
+    //         itemOpacity: 0.75,
+    //         symbolSize: 12,
+    //         symbolShape: 'circle',
+    //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
+    //         effects: [
+    //             {
+    //                 on: 'hover',
+    //                 style: {
+    //                     itemBackground: 'rgba(0, 0, 0, .03)',
+    //                     itemOpacity: 1
+    //                 }
+    //             }
+    //         ]
+    //     }
+    // ]}
     />
 );

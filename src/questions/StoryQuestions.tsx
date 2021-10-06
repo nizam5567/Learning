@@ -31,6 +31,8 @@ interface ResultDetails {
   suggestion?: string;
   suggestionLink?: string;
   suggestionLinkText?: string;
+  totalQue?: number;
+  countCorrectAns?: number;
 }
 
 const StoryQuestions = (props: any) => {
@@ -60,7 +62,7 @@ const StoryQuestions = (props: any) => {
     },
     {
       id: 3, title: "Sample que 3?", contentId: 1, sequence: 3, isCompleted: false,
-      type: "Sentence",
+      type: "Vocabulary",
       answers: [
         { id: 7, title: "Ans 7", questionId: 1, isCorrect: false },
         { id: 8, title: "Ans 8", questionId: 1, isCorrect: true },
@@ -73,8 +75,15 @@ const StoryQuestions = (props: any) => {
         { id: 9, title: "Ans 9", questionId: 1, isCorrect: true },
         { id: 10, title: "Ans 10", questionId: 1, isCorrect: false },
       ]
+    },    
+    {
+      id: 5, title: "Sample que 5?", contentId: 1, sequence: 4, isCompleted: false,
+      type: "Sentence",
+      answers: [
+        { id: 11, title: "Ans 11", questionId: 1, isCorrect: true },
+        { id: 12, title: "Ans 12", questionId: 1, isCorrect: false },
+      ]
     },
-    { id: 5, title: "Sample que 5?", contentId: 2, isCompleted: false, },
     { id: 6, title: "Sample que 6?", contentId: 2, isCompleted: false, }
   ];
 
@@ -85,7 +94,7 @@ const StoryQuestions = (props: any) => {
   ];
   const storyData = contentData.find(item => item.id === storyId);
 
-  const totalQue = 4;
+  const totalQue = 5;
   const pointsForEachQue = 10;
   const totalPoints = totalQue * pointsForEachQue;
 
@@ -146,7 +155,7 @@ const StoryQuestions = (props: any) => {
       } else if (queObj.type === "Sentence") {
         userResultDetails.sentencePoints = (userResultDetails.sentencePoints || 0) + pointsForEachQue;
       }
-
+      userResultDetails.countCorrectAns = (userResultDetails.countCorrectAns || 0) + 1;
       setResultDetails(userResultDetails);
     }
 
@@ -179,7 +188,7 @@ const StoryQuestions = (props: any) => {
       let achievedSentencePointsPercentage = ((resultDetails.sentencePoints || 0) * 100) / (totalResultDetails.sentencePoints || 0);
       console.log("gg", achievedVocabularyPointsPercentage, achievedSentencePointsPercentage);
       let userResultDetails: ResultDetails = resultDetails;
-
+      userResultDetails.totalQue = totalQue;
       if (achievedPointsPercentage < 33) {
         console.log("story");
         userResultDetails.suggestion = "Read Story";
@@ -239,7 +248,7 @@ const StoryQuestions = (props: any) => {
       {!isCompleted ? (!show && <>{storyTitleSection()} {showQueNumberBar(storyQuestions)}<AnimateSharedLayout>
         <QueAns queObj={activeQueData}
           setQue={handleQueChange} />
-      </AnimateSharedLayout></>) : <Result result={result} resultDetails={resultDetails} totalPoints={totalPoints} />
+      </AnimateSharedLayout></>) : <Result resultDetails={resultDetails} totalPoints={totalPoints} />
       }
 
       {/* {showCorrectAnsScreen && <CorrectAns givenQueAnsObj={givenQueAnsObj} />} */}
