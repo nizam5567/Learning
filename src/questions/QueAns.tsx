@@ -45,6 +45,9 @@ export default function QueAns(props: any) {
   const [isCorrectAns, setIsCorrectAns] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalBody, setModalBody] = useState<any>();
+
   const dialogsData = [
     { storyId: 1, content: "dialog 1", },
     { storyId: 1, content: "dialog 2", },
@@ -156,8 +159,23 @@ export default function QueAns(props: any) {
   const [toastShow, setToastShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  
+  const handleShow = (type: string) => {
+    if (type === "story") {
+      setModalTitle("Story");
+      let modalContent = dialogsData.length > 0 && dialogsData.map((item, index) => {
+        return (
+          <div key={index} className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
+            <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>{item.content}</div>
+          </div>);
+      }); 
+      setModalBody(modalContent);
+    } else {
+      setModalTitle("Explanation");
+      setModalBody("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.");
+    }
+    setShow(true);
+  };
+
   const clearValues = () => {
     const elm = document.querySelector(".correctAns");
     (elm as any).classList.remove('correctAns');
@@ -223,7 +241,7 @@ export default function QueAns(props: any) {
       })}
 
       <div style={{ marginTop: "20px" }}>
-        <Button variant="secondary" onClick={handleShow}
+        <Button variant="secondary" onClick={() => { handleShow("story"); }}
           style={{ marginRight: "20px" }}>
           Show Story
         </Button>
@@ -232,22 +250,23 @@ export default function QueAns(props: any) {
           style={{ marginRight: "20px" }}>
           Next
         </Button>}
-        {!isCorrectAns && isSelected && <Button variant="secondary">
+        {!isCorrectAns && isSelected && <Button variant="secondary" onClick={() => { handleShow("explainAns"); }}>
           Explanation
         </Button>}
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Story</Modal.Title>
+          <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="container">
-            {dialogsData.length > 0 && dialogsData.map((item, index) => {
+            {/* {dialogsData.length > 0 && dialogsData.map((item, index) => {
               return (
                 <div key={index} className={"row " + (index % 2 !== 0 ? "justify-content-end" : '')}>
                   <div className={"col-8 " + (index % 2 !== 0 ? "dialogRight dialogCotainer" : 'dialogCotainerReply')}>{item.content}</div>
                 </div>);
-            })}
+            })} */}
+            {modalBody}
           </div>
         </Modal.Body>
         <Modal.Footer>
