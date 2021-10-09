@@ -186,21 +186,17 @@ const StoryQuestions = (props: any) => {
       console.log("achievedPointsPercentage", achievedPointsPercentage);
       let achievedVocabularyPointsPercentage = ((resultDetails.vocalbularyPoints || 0) * 100) / (totalResultDetails.vocalbularyPoints || 0);
       let achievedSentencePointsPercentage = ((resultDetails.sentencePoints || 0) * 100) / (totalResultDetails.sentencePoints || 0);
-      console.log("gg", achievedVocabularyPointsPercentage, achievedSentencePointsPercentage);
       let userResultDetails: ResultDetails = resultDetails;
       userResultDetails.totalQue = totalQue;
       if (achievedPointsPercentage < 33) {
-        console.log("story");
         userResultDetails.suggestion = "Read Story";
         userResultDetails.suggestionLink = "/story/" + storyId;
         userResultDetails.suggestionLinkText = "Read Story";
       } else if (achievedPointsPercentage >= 33 && achievedVocabularyPointsPercentage < 33) {
-        console.log("voca");
         userResultDetails.suggestion = "Read Vocabulary";
         userResultDetails.suggestionLink = "/vocabulary/" + storyId;
         userResultDetails.suggestionLinkText = "Learn Vocabulary";
       } else if (achievedPointsPercentage >= 33 && achievedSentencePointsPercentage < 33) {
-        console.log("sen");
         userResultDetails.suggestion = "Read Sentence";
         userResultDetails.suggestionLink = "/sentence/" + storyId;
         userResultDetails.suggestionLinkText = "Learn Sentence";
@@ -213,6 +209,8 @@ const StoryQuestions = (props: any) => {
       //   setIsCompleted(true);
       // }, 2000);
       setIsCompleted(true);
+      const elm = document.querySelector('.bottomSection');
+      (elm as any).style.display = "block";
     }
   }
 

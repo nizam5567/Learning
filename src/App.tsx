@@ -16,6 +16,7 @@ import Login from "./Login";
 import PrivateRoute from "./Utils/PrivateRoute";
 import PublicRoute from "./Utils/PublicRoute";
 import Favorite from "./stories/Favorite";
+import BottomLinks from "./common/BottomLinks";
 
 function App() {
 
@@ -39,7 +40,7 @@ function App() {
           <PrivateRoute path="/result" component={Result} />          
           <PrivateRoute path="/favorite" component={Favorite} />          
         </Switch>
-
+        <BottomLinks />
       </div>
     </Router>
   );

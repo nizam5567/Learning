@@ -29,7 +29,9 @@ const Login = (props: any) => {
         //   else setError("Something went wrong. Please try again later.");
         // });
         setUserSession(username.value, password.value);
-        props.history.push('/dashboard');
+        //props.history.push('/dashboard');
+        var {from} = props.location.state || {from: {pathname: '/'}};
+        props.history.push(from);
     }
 
     return (<div className="outer login">

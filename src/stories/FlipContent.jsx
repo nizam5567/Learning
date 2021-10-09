@@ -82,46 +82,44 @@ class FlipContent extends React.Component {
                 totalPage: count,//this.flipBook.getPageFlip().getPageCount(),
             });
         }, 100);
-
+        
         //setTimeout(() => {          
-            
-            const dimension = getWindowDimensions();
 
-            let height = 733;
-            if (dimension) {
-                if (dimension.width <= 450) {
-                    height = 900;
-                } else if (dimension.width >= 450 && dimension.width < 767) {
-                    height = 733;
-                } else if (dimension.width >= 768 && dimension.width < 990) {
-                    height = 1000;
-                } else if (dimension.width >= 990 && dimension.width < 1150) {
-                    height = 700;
-                } else {
-                    height = 500;
-                }
+        const dimension = getWindowDimensions();
+
+        let height = 733;
+        if (dimension) {
+            if (dimension.width <= 450) {
+                height = 900;
+            } else if (dimension.width >= 450 && dimension.width < 767) {
+                height = 733;
+            } else if (dimension.width >= 768 && dimension.width < 990) {
+                height = 1000;
+            } else if (dimension.width >= 990 && dimension.width < 1150) {
+                height = 700;
+            } else {
+                height = 500;
             }
+        }
 
-            // console.log("height - ", height);
-            this.setState({
-                windowHeight: height,
-                isSetWindowHeight: true,
-            });
-            
+        // console.log("height - ", height);
+        this.setState({
+            windowHeight: height,
+            isSetWindowHeight: true,
+        });
+
         //}, 50);
     }
 
-
-
     render() {
         return (
-            <div>
+            <div style={{ overflow: "hidden" }}>
                 <div className="row">
                     <div className="col-md-12" style={{ textAlign: "center", margin: "20px 0 10px" }}>
                         <h2><strong>{this.props.title}</strong></h2>
                     </div>
                 </div>
-                <div style={{ position: "relative" }}>
+                <div style={{ position: "relative", overflow: "hidden" }}>
                     <div className="container" style={{ margin: "0 auto", width: "calc(100% - 55px)" }}>
                         {this.state.isSetWindowHeight && <HTMLFlipBook
                             width={550}

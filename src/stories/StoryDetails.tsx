@@ -27,6 +27,10 @@ const StoryDetails = (props: any) => {
         // { id: 6, storyId: 1, content: "dialog 6", contentBangla: "" }
     ];
 
+    const dialogsDataByStoryId = dialogsData.filter((item: any) => {
+        return item.storyId === storyId;
+    });
+
     const showNoOfDialog = 2;
     let startingIdx = 0;
 
@@ -119,8 +123,9 @@ const StoryDetails = (props: any) => {
             </MDBContainer>
          */}
 
-            <FlipContent storyId={storyId} title={storyData?.title} content={dialogsData} />
-            <BottomLinks />
+            {dialogsDataByStoryId.length > 0 && <FlipContent storyId={storyId}
+                title={storyData?.title}
+                content={dialogsData} />}
         </div>
     );
 }

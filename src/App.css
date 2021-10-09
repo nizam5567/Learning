@@ -55,3 +55,8 @@
   padding: 10px;
   position: relative;
 }
+
+.activeBottomLink {
+  background-color: #e5e5e5;
+  border-bottom: 5px solid royalblue;
+}

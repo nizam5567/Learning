@@ -79,11 +79,15 @@ export default function TagList() {
 
       <div className="container bootstrap snippets bootdey appStoryContent">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-9">
             <div className="userName">Hello {userName}</div>
             <div className="tagLine">What do you want to learn?</div>
           </div>
+          <div className="col-3" style={{ paddingTop: "60px", display: token ? "none" : "block" }}>
+            {/* <Link to={'/login'} className="btn btn-secondary">Login</Link> */}
+          </div>
         </div>
+
         <div className="row">
           <div className="col-md-12">
             <h2><strong>Story</strong></h2>
@@ -166,7 +170,6 @@ export default function TagList() {
           </div>
         </div>
       </div>
-      <BottomLinks />
 
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>

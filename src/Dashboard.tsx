@@ -138,9 +138,7 @@ export default function Dashboard(props: any) {
                         </div>
                     </div>
                 </div>
-                <div className="dashboardBottom">
-                    <BottomLinks />
-                </div>
+                
             </div>
 
         </div>

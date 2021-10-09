@@ -86,7 +86,6 @@ export default function Favorite() {
         </div>
 
       </div>
-      <BottomLinks />
 
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>

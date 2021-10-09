@@ -281,7 +281,6 @@ export default function QueAns(props: any) {
 
       <ToastContainer className="p-3" position={'top-center'}>
         <Toast className="d-inline-block m-1" bg={toasterBg} onClose={() => setToastShow(false)} show={toastShow} delay={3000} autohide>
-
           <Toast.Body className={'text-white'}>
             {toasterMsg}
           </Toast.Body>
